@@ -1,12 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-    selector: 'selector-name',
-    templateUrl: 'name.component.html'
+  selector: 'gifs-card-list',
+  templateUrl: './card-list.component.html'
 })
+export class CardListComponent {
 
-export class NameComponent implements OnInit {
-    constructor() { }
-
-    ngOnInit() { }
 }
