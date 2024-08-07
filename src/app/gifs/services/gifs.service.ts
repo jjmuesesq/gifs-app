@@ -27,6 +27,11 @@ export class GifsService {
 
         this._tagsHistory.unshift(tag); //inserto el tag al inicio
         this._tagsHistory = this._tagsHistory.splice(0, 10); //mostrar solo 10 elementos
+        this.saveLocalStorage();
+    }
+
+    private saveLocalStorage():void {
+        localStorage.setItem('history', JSON.stringify(this._tagsHistory) );
     }
 
     //añadir un tag al inicio del arreglo
