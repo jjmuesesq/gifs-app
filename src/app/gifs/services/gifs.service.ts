@@ -1,8 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Gif, SearchResponse } from '../interfaces/gifs.interfaces';
 
 @Injectable({providedIn: 'root'})
 export class GifsService {
+
+    public gifList: Gif[] = [];
 
     private _tagsHistory: string[] = [];
     private apiKey: string = 'FOkALThLY4yLDlS0XiThDK35iFt5YqbV';
@@ -31,29 +34,32 @@ export class GifsService {
         if(tag.length === 0 ) return;
         this.organizeHistory(tag);
 
-    // async searchTag( tag: string ):Promise<void> {
-    //     if(tag.length === 0 ) return;
-    //     this.organizeHistory(tag);
-
-        // consumo del api forma 1;
-        // fetch('http://api.giphy.com/v1/gifs/search?api_key=FOkALThLY4yLDlS0XiThDK35iFt5YqbV&q=valorant&limit=10')
-        //     .then(res => res.json())
-        //     .then(data => console.log(data));
-
-        // consumo del api forma 2;
-        // const resp = await fetch('http://api.giphy.com/v1/gifs/search?api_key=FOkALThLY4yLDlS0XiThDK35iFt5YqbV&q=valorant&limit=10');
-        // const data = await resp.json();
-        // console.log(data);
-
         // consumo del api forma 3 http; no es una promesa sino un observable
-
         const params = new HttpParams()
             .set('api_key', this.apiKey)
             .set('limit', 10)
             .set('q', tag)
-        this.http.get(`${ this.serviceUrl }/search`, { params })
+
+        this.http.get<SearchResponse>(`${ this.serviceUrl }/search`, { params })
             .subscribe( resp => {
-                console.log(resp);
+                this.gifList = resp.data;
+                console.log({ gifs: this.gifList });
             });
     }
 }
+
+
+
+// async searchTag( tag: string ):Promise<void> {
+//     if(tag.length === 0 ) return;
+//     this.organizeHistory(tag);
+
+    // consumo del api forma 1;
+    // fetch('http://api.giphy.com/v1/gifs/search?api_key=FOkALThLY4yLDlS0XiThDK35iFt5YqbV&q=valorant&limit=10')
+    //     .then(res => res.json())
+    //     .then(data => console.log(data));
+
+    // consumo del api forma 2;
+    // const resp = await fetch('http://api.giphy.com/v1/gifs/search?api_key=FOkALThLY4yLDlS0XiThDK35iFt5YqbV&q=valorant&limit=10');
+    // const data = await resp.json();
+    // console.log(data);
