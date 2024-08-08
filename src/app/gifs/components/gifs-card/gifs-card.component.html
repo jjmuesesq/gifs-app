@@ -1,6 +1,9 @@
 
 <div class="card mb-2 text-center bg-dark">
-    <shared-lazy-image></shared-lazy-image>
+    <shared-lazy-image 
+        [url]="gif.images.downsized_medium.url"
+        [alt]="gif.title || 'No name'"
+    ></shared-lazy-image>
     <!-- Cuando el valor es una expresion de javascript-->
     <!-- <img 
         [src]="gif.images.downsized_medium.url" 
